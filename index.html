@@ -15,16 +15,63 @@ html{
 scroll-behavior:smooth;
 }
 body{
-background:linear-gradient(-45deg,#fff8e7,#e8f4ff,#ffe5ec,#fff8e7);
+background:linear-gradient(-45deg,#fdf2ff,#e8f0ff,#ffe6f0,#fff3e0,#fdf2ff);
 background-size:400% 400%;
-animation:bgmove 18s ease infinite;
+animation:bgmove 26s ease infinite;
 overflow-x:hidden;
+position:relative;
 }
 @keyframes bgmove{
 0%{background-position:0% 50%;}
 50%{background-position:100% 50%;}
 100%{background-position:0% 50%;}
 }
+.nebula{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+pointer-events:none;
+background:
+radial-gradient(circle at 15% 20%, rgba(255,200,230,0.35), transparent 35%),
+radial-gradient(circle at 85% 15%, rgba(190,210,255,0.3), transparent 40%),
+radial-gradient(circle at 50% 80%, rgba(255,225,180,0.3), transparent 45%);
+animation:nebulaDrift 30s ease-in-out infinite alternate;
+}
+@keyframes nebulaDrift{
+0%{transform:scale(1) translate(0,0);}
+100%{transform:scale(1.15) translate(-2%,2%);}
+}
+
+/* ---------- Ambient drifting stardust ---------- */
+.dust{
+position:fixed;
+border-radius:50%;
+background:radial-gradient(circle, rgba(255,255,255,0.9), rgba(255,255,255,0));
+pointer-events:none;
+z-index:1;
+animation:driftUp linear infinite;
+}
+@keyframes driftUp{
+0%{
+transform:translateY(0) translateX(0);
+opacity:0;
+}
+10%{
+opacity:0.8;
+}
+90%{
+opacity:0.5;
+}
+100%{
+transform:translateY(-110vh) translateX(20px);
+opacity:0;
+}
+}
+
+/* ---------- Hero ---------- */
 .hero{
 height:100vh;
 display:flex;
@@ -33,11 +80,32 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:20px;
+position:relative;
+z-index:2;
+}
+.moon-glow{
+position:absolute;
+top:12%;
+width:220px;
+height:220px;
+border-radius:50%;
+background:radial-gradient(circle, rgba(255,236,180,0.55), rgba(255,236,180,0) 70%);
+filter:blur(2px);
+animation:moonPulse 6s ease-in-out infinite;
+z-index:-1;
+}
+@keyframes moonPulse{
+50%{
+opacity:0.6;
+transform:scale(1.08);
+}
 }
 .hero h1{
 font-size:4rem;
 color:#ff7fa3;
 text-shadow:0 0 20px rgba(255,127,163,0.3);
+opacity:0;
+animation:heroFadeIn 1.4s ease forwards;
 }
 .hero p{
 margin-top:15px;
@@ -45,18 +113,36 @@ font-size:1.3rem;
 color:#555;
 max-width:600px;
 line-height:1.6;
+opacity:0;
+animation:heroFadeIn 1.4s ease forwards;
+animation-delay:0.4s;
+}
+@keyframes heroFadeIn{
+from{
+opacity:0;
+transform:translateY(15px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 .scroll-text{
 margin-top:40px;
 font-size:1rem;
 color:#888;
 animation:bounce 2s infinite;
+opacity:0;
+animation:heroFadeIn 1.4s ease forwards, bounce 2s infinite;
+animation-delay:0.9s, 2.3s;
 }
 @keyframes bounce{
 50%{
 transform:translateY(10px);
 }
 }
+
+/* ---------- Scrapbook pages ---------- */
 .page{
 max-width:750px;
 margin:80px auto;
@@ -64,15 +150,38 @@ padding:20px 20px 50px 20px;
 background:white;
 border-radius:25px;
 box-shadow:0 15px 35px rgba(0,0,0,0.15);
-transform:rotate(-1deg);
-transition:0.4s;
-animation:fadeUp 1s ease;
+transform:rotate(-1deg) translateY(60px);
+transition:transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
+opacity:0;
+position:relative;
+z-index:2;
 }
 .page:nth-child(even){
-transform:rotate(1deg);
+transform:rotate(1deg) translateY(60px);
+}
+.page.is-visible{
+opacity:1;
+transform:rotate(-1deg) translateY(0);
+animation:fadeUp 0.9s ease forwards;
+}
+.page:nth-child(even).is-visible{
+transform:rotate(1deg) translateY(0);
 }
 .page:hover{
-transform:rotate(0deg) scale(1.02);
+transform:rotate(0deg) scale(1.02) translateY(0);
+box-shadow:0 22px 45px rgba(0,0,0,0.2);
+}
+.page::before{
+content:"";
+position:absolute;
+top:-10px;
+left:50%;
+transform:translateX(-50%) rotate(-3deg);
+width:70px;
+height:24px;
+background:rgba(255,217,140,0.55);
+border:1px solid rgba(200,160,60,0.3);
+box-shadow:0 2px 4px rgba(0,0,0,0.1);
 }
 .page img{
 width:100%;
@@ -96,19 +205,70 @@ opacity:1;
 transform:translateY(0);
 }
 }
+
+/* ---------- Background star field ---------- */
 .star{
 position:fixed;
-width:3px;
-height:3px;
-background:white;
+width:4px;
+height:4px;
+background:#ffd76a;
 border-radius:50%;
+box-shadow:0 0 6px 1px rgba(255,180,80,0.8);
 animation:twinkle 4s infinite;
+z-index:0;
+pointer-events:none;
+opacity:0.85;
 }
 @keyframes twinkle{
 50%{
-opacity:0.2;
+opacity:0.15;
 }
 }
+
+/* ---------- Shooting stars ---------- */
+.shooting-star{
+position:fixed;
+top:0;
+left:0;
+width:6px;
+height:6px;
+background:#fff6da;
+border-radius:50%;
+box-shadow:0 0 10px 3px rgba(255,220,140,0.9);
+opacity:0;
+z-index:5;
+pointer-events:none;
+animation:shoot linear forwards;
+}
+.shooting-star::before{
+content:"";
+position:absolute;
+top:50%;
+left:50%;
+width:140px;
+height:2.5px;
+background:linear-gradient(90deg, rgba(255,230,160,0.95), transparent);
+transform:translateY(-50%) rotate(var(--angle,180deg));
+transform-origin:left center;
+}
+@keyframes shoot{
+0%{
+opacity:0;
+transform:translate(0,0);
+}
+8%{
+opacity:1;
+}
+75%{
+opacity:1;
+}
+100%{
+opacity:0;
+transform:translate(var(--dx,500px),var(--dy,300px));
+}
+}
+
+/* ---------- Final section ---------- */
 .final-section{
 text-align:center;
 max-width:700px;
@@ -117,6 +277,16 @@ padding:50px;
 background:white;
 border-radius:30px;
 box-shadow:0 15px 35px rgba(0,0,0,0.12);
+position:relative;
+z-index:2;
+opacity:0;
+transform:translateY(60px);
+transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.final-section.is-visible{
+opacity:1;
+transform:translateY(0);
+animation:fadeUp 0.9s ease forwards;
 }
 .final-section h2{
 color:#ff7fa3;
@@ -125,11 +295,41 @@ margin-bottom:20px;
 .final-star{
 font-size:90px;
 cursor:pointer;
-animation:pulse 2s infinite;
+display:inline-block;
+animation:pulse 2.4s ease-in-out infinite;
+filter:drop-shadow(0 0 18px rgba(255,210,110,0.7));
+transition:transform 0.25s ease;
+position:relative;
+}
+.final-star:hover{
+transform:scale(1.12);
+filter:drop-shadow(0 0 28px rgba(255,210,110,0.9));
+}
+.final-star:active{
+transform:scale(0.92);
 }
 @keyframes pulse{
 50%{
-transform:scale(1.15);
+transform:scale(1.18);
+}
+}
+.burst-particle{
+position:fixed;
+top:0;
+left:0;
+border-radius:50%;
+pointer-events:none;
+z-index:50;
+animation:burstFly ease-out forwards;
+}
+@keyframes burstFly{
+0%{
+opacity:1;
+transform:translate(0,0) scale(1);
+}
+100%{
+opacity:0;
+transform:translate(var(--bx),var(--by)) scale(0.3);
 }
 }
 .hidden{
@@ -138,6 +338,10 @@ margin-top:30px;
 line-height:1.8;
 color:#444;
 font-size:1.1rem;
+}
+.hidden.is-shown{
+display:block;
+animation:fadeUp 0.7s ease forwards;
 }
 .top-btn{
 margin-top:30px;
@@ -148,16 +352,65 @@ cursor:pointer;
 font-size:1rem;
 background:#ff8fa3;
 color:white;
+transition:background 0.25s ease, transform 0.2s ease;
+}
+.top-btn:hover{
+background:#ff7396;
+transform:translateY(-2px);
 }
 footer{
 text-align:center;
 padding:60px;
 color:#777;
+position:relative;
+z-index:2;
+}
+
+/* ---------- Floating back-to-top button ---------- */
+.float-top{
+position:fixed;
+bottom:25px;
+right:25px;
+width:50px;
+height:50px;
+border-radius:50%;
+background:#ff8fa3;
+color:white;
+border:none;
+font-size:1.3rem;
+cursor:pointer;
+box-shadow:0 6px 18px rgba(255,127,163,0.45);
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+visibility:hidden;
+transform:translateY(15px);
+transition:opacity 0.3s ease, transform 0.3s ease, background 0.25s ease;
+z-index:10;
+}
+.float-top.show{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+.float-top:hover{
+background:#ff7396;
+}
+
+@media (prefers-reduced-motion: reduce){
+*{
+animation-duration:0.001s !important;
+animation-iteration-count:1 !important;
+transition-duration:0.001s !important;
+}
 }
 </style>
 </head>
 <body>
+<div class="nebula"></div>
 <div class="hero">
+<div class="moon-glow"></div>
 <h1>For My Little Star ⭐</h1>
 <p>
 A small collection of memories,
@@ -225,7 +478,7 @@ kindness, effort and moments that deserve to be remembered.
 Hey Little Star,
 <br><br>
 
-If you’re reading this…
+If you're reading this…
 remember that one result can never define your worth.
 
 You are stronger than your doubts,
@@ -233,21 +486,24 @@ brighter than your fears,
 and far more capable than you realize.
 
 No matter what happens,
-I’ll always believe in you.
+I'll always believe in you.
 
 💛
 
 — Ujjwal
 
 </p>
-
-Back To The Beginning ⭐
+<button class="top-btn" onclick="scrollToTop()">Back To The Beginning ⭐</button>
 </div>
 </div>
 <footer>
 Made with lots of care ⭐
 </footer>
+
+<button class="float-top" id="floatTop" onclick="scrollToTop()" aria-label="Back to top">⬆️</button>
+
 <script>
+/* ---------- Twinkling background stars ---------- */
 for(let i=0;i<150;i++){
 let star=document.createElement('div');
 star.classList.add('star');
@@ -256,9 +512,117 @@ star.style.top=Math.random()*100+'vh';
 star.style.animationDelay=Math.random()*5+'s';
 document.body.appendChild(star);
 }
-function showMessage(){
-document.getElementById("secret").style.display="block";
+
+/* ---------- Ambient drifting stardust ---------- */
+function spawnDust(){
+const dust=document.createElement('div');
+dust.classList.add('dust');
+const size=2+Math.random()*4;
+dust.style.width=size+'px';
+dust.style.height=size+'px';
+dust.style.left=Math.random()*100+'vw';
+dust.style.top=100+Math.random()*10+'vh';
+dust.style.animationDuration=(8+Math.random()*10)+'s';
+document.body.appendChild(dust);
+setTimeout(()=>dust.remove(),20000);
 }
+for(let i=0;i<25;i++){
+setTimeout(spawnDust,Math.random()*8000);
+}
+setInterval(spawnDust,900);
+
+/* ---------- Final secret message + sparkle burst ---------- */
+function showMessage(){
+const secret=document.getElementById("secret");
+secret.style.display="block";
+secret.classList.add("is-shown");
+}
+
+function burstAt(x,y){
+const colors=['#ffd76a','#ff9fc0','#ffe6a7','#c9b8ff','#9fd8ff'];
+for(let i=0;i<28;i++){
+const p=document.createElement('div');
+p.classList.add('burst-particle');
+const size=4+Math.random()*6;
+p.style.width=size+'px';
+p.style.height=size+'px';
+p.style.background=colors[Math.floor(Math.random()*colors.length)];
+p.style.left=x+'px';
+p.style.top=y+'px';
+const angle=Math.random()*Math.PI*2;
+const dist=80+Math.random()*160;
+p.style.setProperty('--bx',Math.cos(angle)*dist+'px');
+p.style.setProperty('--by',Math.sin(angle)*dist+'px');
+p.style.animationDuration=(0.7+Math.random()*0.6)+'s';
+document.body.appendChild(p);
+p.addEventListener('animationend',()=>p.remove());
+}
+}
+
+document.querySelector('.final-star').addEventListener('click',(e)=>{
+burstAt(e.clientX,e.clientY);
+});
+
+/* ---------- Smooth scroll to top ---------- */
+function scrollToTop(){
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- Scroll reveal for pages & final section ---------- */
+const revealEls=document.querySelectorAll('.page, .final-section');
+const revealObserver=new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('is-visible');
+revealObserver.unobserve(entry.target);
+}
+});
+},{threshold:0.15});
+revealEls.forEach(el=>revealObserver.observe(el));
+
+/* ---------- Show/hide floating back-to-top button ---------- */
+const floatTop=document.getElementById('floatTop');
+window.addEventListener('scroll',()=>{
+if(window.scrollY>500){
+floatTop.classList.add('show');
+}else{
+floatTop.classList.remove('show');
+}
+});
+
+/* ---------- Shooting stars ---------- */
+function createShootingStar(){
+const star=document.createElement('div');
+star.classList.add('shooting-star');
+
+const startX=Math.random()*window.innerWidth*0.6;
+const startY=Math.random()*(window.innerHeight*0.4);
+const travel=350+Math.random()*350;
+const angle=25+Math.random()*20; // degrees, down-right diagonal
+const rad=angle*Math.PI/180;
+const dx=Math.cos(rad)*travel;
+const dy=Math.sin(rad)*travel;
+
+star.style.left=startX+'px';
+star.style.top=startY+'px';
+star.style.setProperty('--dx',dx+'px');
+star.style.setProperty('--dy',dy+'px');
+star.style.setProperty('--angle',(angle+180)+'deg');
+star.style.animationDuration=(0.9+Math.random()*0.6)+'s';
+
+document.body.appendChild(star);
+
+star.addEventListener('animationend',()=>star.remove());
+}
+
+function scheduleShootingStars(){
+createShootingStar();
+const nextDelay=2000+Math.random()*3000;
+setTimeout(scheduleShootingStars,nextDelay);
+}
+scheduleShootingStars();
+// fire one almost immediately so it's visible on load
+setTimeout(createShootingStar,600);
 </script>
 </body>
 </html>
