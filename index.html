@@ -1,76 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>For My Little Star ⭐</title>
-
 <style>
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Comic Sans MS', cursive;
+font-family:'Trebuchet MS',sans-serif;
 }
-
+html{
+scroll-behavior:smooth;
+}
 body{
-background:linear-gradient(to bottom,#fff8e7,#e8f4ff);
+background:linear-gradient(-45deg,#fff8e7,#e8f4ff,#ffe5ec,#fff8e7);
+background-size:400% 400%;
+animation:bgmove 18s ease infinite;
 overflow-x:hidden;
 }
-
+@keyframes bgmove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
 .hero{
 height:100vh;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-direction:column;
 text-align:center;
 padding:20px;
 }
-
-h1{
-font-size:3rem;
-color:#ff8fa3;
+.hero h1{
+font-size:4rem;
+color:#ff7fa3;
+text-shadow:0 0 20px rgba(255,127,163,0.3);
 }
-
-.subtitle{
-margin-top:10px;
-font-size:1.2rem;
+.hero p{
+margin-top:15px;
+font-size:1.3rem;
 color:#555;
+max-width:600px;
+line-height:1.6;
 }
-
-.star{
-position:fixed;
-width:3px;
-height:3px;
-background:white;
-border-radius:50%;
-animation:twinkle 3s infinite;
+.scroll-text{
+margin-top:40px;
+font-size:1rem;
+color:#888;
+animation:bounce 2s infinite;
 }
-
-@keyframes twinkle{
+@keyframes bounce{
 50%{
-opacity:0.3;
+transform:translateY(10px);
 }
 }
-
 .page{
-max-width:700px;
-margin:60px auto;
+max-width:750px;
+margin:80px auto;
+padding:20px 20px 50px 20px;
 background:white;
-padding:30px;
 border-radius:25px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+transform:rotate(-1deg);
+transition:0.4s;
 animation:fadeUp 1s ease;
 }
-
+.page:nth-child(even){
+transform:rotate(1deg);
+}
+.page:hover{
+transform:rotate(0deg) scale(1.02);
+}
 .page img{
 width:100%;
 border-radius:15px;
+display:block;
 }
-
+.caption{
+text-align:center;
+margin-top:18px;
+color:#666;
+font-style:italic;
+font-size:1rem;
+}
 @keyframes fadeUp{
 from{
 opacity:0;
@@ -81,151 +96,169 @@ opacity:1;
 transform:translateY(0);
 }
 }
-
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:twinkle 4s infinite;
+}
+@keyframes twinkle{
+50%{
+opacity:0.2;
+}
+}
+.final-section{
+text-align:center;
+max-width:700px;
+margin:120px auto;
+padding:50px;
+background:white;
+border-radius:30px;
+box-shadow:0 15px 35px rgba(0,0,0,0.12);
+}
+.final-section h2{
+color:#ff7fa3;
+margin-bottom:20px;
+}
 .final-star{
-font-size:80px;
+font-size:90px;
 cursor:pointer;
-transition:0.4s;
+animation:pulse 2s infinite;
 }
-
-.final-star:hover{
-transform:scale(1.3);
+@keyframes pulse{
+50%{
+transform:scale(1.15);
 }
-
+}
 .hidden{
 display:none;
-margin-top:20px;
+margin-top:30px;
+line-height:1.8;
 color:#444;
 font-size:1.1rem;
 }
-
+.top-btn{
+margin-top:30px;
+padding:12px 25px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-size:1rem;
+background:#ff8fa3;
+color:white;
+}
 footer{
 text-align:center;
 padding:60px;
 color:#777;
 }
-
 </style>
 </head>
-
 <body>
-
 <div class="hero">
 <h1>For My Little Star ⭐</h1>
-<p class="subtitle">
-Becautest message 
+<p>
+A small collection of memories,
+kindness, effort and moments that deserve to be remembered.
 </p>
+<div class="scroll-text">
+↓ Scroll to begin the journey ↓
 </div>
-
-<!-- UPLOAD YOUR BOOKLET IMAGES BELOW -->
-
+</div>
 <div class="page">
-<img src="page1.jpg.jpg">
+<img src="page1.jpg">
+<p class="caption">Every story begins with a moment.</p>
 </div>
-
 <div class="page">
-<img src="page2.jpg.jpg">
+<img src="page2.jpg">
+<p class="caption">Some memories stay longer than others.</p>
 </div>
-
 <div class="page">
-<img src="page3.jpg.jpg">
+<img src="page3.jpg">
+<p class="caption">A page worth revisiting.</p>
 </div>
-
 <div class="page">
-<img src="page4.jpg.jpg">
+<img src="page4.jpg">
+<p class="caption">Small things often mean the most.</p>
 </div>
-
 <div class="page">
-<img src="page5.jpg.PNG">
+<img src="page5.jpg">
+<p class="caption">A little reminder to keep going.</p>
 </div>
-
 <div class="page">
-<img src="page6.jpg.jpg">
+<img src="page6.jpg">
+<p class="caption">Cloudy days don't last forever.</p>
 </div>
-
 <div class="page">
-<img src="page7.jpg.jpg">
+<img src="page7.jpg">
+<p class="caption">Growth happens quietly.</p>
 </div>
-
 <div class="page">
-<img src="page8.jpg.jpg">
+<img src="page8.jpg">
+<p class="caption">One step at a time.</p>
 </div>
-
 <div class="page">
-<img src="page9.jpg.jpg">
+<img src="page9.jpg">
+<p class="caption">You made it this far.</p>
 </div>
-
 <div class="page">
-<img src="Page10.jpg.jpg">
+<img src="page10.jpg">
+<p class="caption">And there is still more ahead.</p>
 </div>
-
 <div class="page">
-<img src="Page11.jpg.jpg">
+<img src="page11.jpg">
+<p class="caption">Never underestimate your own light.</p>
 </div>
-
 <div class="page">
-<img src="page12.jpg.jpg">
+<img src="page12.jpg">
+<p class="caption">The final page, not the final chapter.</p>
 </div>
-
-<div class="page" style="text-align:center">
-
+<div class="final-section">
 <h2>Keep Shining, Little Star ⭐</h2>
-
-<br>
-
 <div class="final-star" onclick="showMessage()">
 ⭐
 </div>
-
 <div id="secret" class="hidden">
-
+<p>
 Hey Little Star,
+<br><br>
 
-If you're reading this...
+If you’re reading this…
+remember that one result can never define your worth.
 
-I just wanted to remind you that one result doesn't define you.
+You are stronger than your doubts,
+brighter than your fears,
+and far more capable than you realize.
 
-You are stronger, kinder and more capable than you think.
-
-And no matter what happens,
-
-I'll always believe in you.
+No matter what happens,
+I’ll always believe in you.
 
 💛
 
-- Ujjwal
+— Ujjwal
 
+</p>
+
+Back To The Beginning ⭐
 </div>
-
 </div>
-
 <footer>
 Made with lots of care ⭐
 </footer>
-
 <script>
-
-for(let i=0;i<120;i++){
-
+for(let i=0;i<150;i++){
 let star=document.createElement('div');
-
 star.classList.add('star');
-
 star.style.left=Math.random()*100+'vw';
 star.style.top=Math.random()*100+'vh';
-
 star.style.animationDelay=Math.random()*5+'s';
-
 document.body.appendChild(star);
-
 }
-
 function showMessage(){
 document.getElementById("secret").style.display="block";
 }
-
 </script>
-
 </body>
 </html>
-
